@@ -34,7 +34,7 @@ app.post('/api/items', async(req, res) => {
     if (req.file) {
         // Jika ada file yang diunggah, upload file ke serverless function
         try {
-            const uploadResponse = await axios.post('https://project-api-umkm.vercel.app/api/upload', {
+            const uploadResponse = await axios.post('https://project-api-umkm.vercel.app/api/uploads', {
                 data: req.file.buffer.toString('base64'),
                 filename: req.file.originalname,
             });
