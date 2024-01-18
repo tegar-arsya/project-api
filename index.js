@@ -52,7 +52,3 @@ app.post('/api/items', upload.single('imageUrl'), (req, res) => {
     items.push(newItem);
     res.json(newItem);
 });
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
