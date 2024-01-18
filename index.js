@@ -1,3 +1,4 @@
+// index.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -8,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors()); // Menggunakan middleware cors
 
 // Konfigurasi multer
 const storage = multer.diskStorage({
@@ -25,14 +26,12 @@ const upload = multer({ storage: storage });
 
 // Contoh data
 const items = [{
-        id: 1,
-        name: 'Personal Website',
-        imageUrl: 'portfolio_v2',
-        isi: 'My personal website, I created this website to display my profile, skills and projects. As well as my place to try new technology.',
-        ket: 'VueJS 3, Tailwind',
-    },
-    // Tambahkan data lainnya
-];
+    id: 1,
+    name: 'Personal Website',
+    imageUrl: 'portfolio_v2',
+    isi: 'My personal website, I created this website to display my profile, skills and projects. As well as my place to try new technology.',
+    ket: 'VueJS 3, Tailwind',
+}];
 
 // Mendapatkan semua item
 app.get('/api/items', (req, res) => {
@@ -51,4 +50,8 @@ app.post('/api/items', upload.single('imageUrl'), (req, res) => {
 
     items.push(newItem);
     res.json(newItem);
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
