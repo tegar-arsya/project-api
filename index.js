@@ -1,4 +1,3 @@
-// index.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -9,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-app.use(cors()); // Menggunakan middleware cors
+app.use(cors());
 
 // Konfigurasi multer
 const storage = multer.diskStorage({
@@ -20,7 +19,6 @@ const storage = multer.diskStorage({
         cb(null, file.originalname); // Gunakan nama file asli
     }
 });
-
 
 const upload = multer({ storage: storage });
 
@@ -46,11 +44,24 @@ app.post('/api/items', upload.single('imageUrl'), (req, res) => {
     if (req.file) {
         // Jika ada file yang diunggah, tambahkan properti imageUrl ke newItem
         newItem.imageUrl = `https://project-api-umkm.vercel.app/uploads/${req.file.filename}`;
-
     }
 
     items.push(newItem);
     res.json(newItem);
+});
+
+// Endpoint untuk upload file
+app.post('/api/upload', upload.single('file'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+    }
+
+    const fileInfo = {
+        filename: req.file.originalname,
+        path: req.file.path,
+    };
+
+    res.status(200).json(fileInfo);
 });
 
 app.listen(port, () => {
