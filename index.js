@@ -17,10 +17,10 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/'); // Folder penyimpanan file
     },
     filename: function(req, file, cb) {
-        const ext = path.extname(file.originalname);
-        cb(null, Date.now() + ext); // Nama file baru dengan timestamp
+        cb(null, file.originalname); // Gunakan nama file asli
     }
 });
+
 
 const upload = multer({ storage: storage });
 
@@ -46,6 +46,7 @@ app.post('/api/items', upload.single('imageUrl'), (req, res) => {
     if (req.file) {
         // Jika ada file yang diunggah, tambahkan properti imageUrl ke newItem
         newItem.imageUrl = `https://project-api-umkm.vercel.app/uploads/${req.file.filename}`;
+
     }
 
     items.push(newItem);
