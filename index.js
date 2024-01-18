@@ -46,7 +46,7 @@ app.post('/api/items', upload.single('imageUrl'), (req, res) => {
 
     if (req.file) {
         // Jika ada file yang diunggah, tambahkan properti imageUrl ke newItem
-        newItem.imageUrl = `http://localhost:${port}/uploads/${req.file.filename}`;
+        newItem.imageUrl = `https://project-api-umkm.vercel.app/uploads/${req.file.filename}`;
     }
 
     items.push(newItem);
